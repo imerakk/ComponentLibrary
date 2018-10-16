@@ -15,6 +15,10 @@
 		F09389532175F8EC00C902D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F09389522175F8EC00C902D8 /* main.m */; };
 		F093895D2175F8EC00C902D8 /* ComponentLibraryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F093895C2175F8EC00C902D8 /* ComponentLibraryTests.m */; };
 		F09389682175F8EC00C902D8 /* ComponentLibraryUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F09389672175F8EC00C902D8 /* ComponentLibraryUITests.m */; };
+		F09389802175F9E500C902D8 /* GTScrollBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09389782175F9E400C902D8 /* GTScrollBannerView.m */; };
+		F09389812175F9E500C902D8 /* GTBannerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897A2175F9E400C902D8 /* GTBannerCollectionViewFlowLayout.m */; };
+		F09389822175F9E500C902D8 /* GTBannerPageControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897C2175F9E500C902D8 /* GTBannerPageControlView.m */; };
+		F09389832175F9E500C902D8 /* GTBannerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897F2175F9E500C902D8 /* GTBannerCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,14 @@
 		F09389632175F8EC00C902D8 /* ComponentLibraryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComponentLibraryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09389672175F8EC00C902D8 /* ComponentLibraryUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComponentLibraryUITests.m; sourceTree = "<group>"; };
 		F09389692175F8EC00C902D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F09389782175F9E400C902D8 /* GTScrollBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTScrollBannerView.m; sourceTree = "<group>"; };
+		F09389792175F9E400C902D8 /* GTBannerCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTBannerCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		F093897A2175F9E400C902D8 /* GTBannerCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTBannerCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		F093897B2175F9E400C902D8 /* GTBannerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTBannerCollectionViewCell.h; sourceTree = "<group>"; };
+		F093897C2175F9E500C902D8 /* GTBannerPageControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTBannerPageControlView.m; sourceTree = "<group>"; };
+		F093897D2175F9E500C902D8 /* GTScrollBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTScrollBannerView.h; sourceTree = "<group>"; };
+		F093897E2175F9E500C902D8 /* GTBannerPageControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTBannerPageControlView.h; sourceTree = "<group>"; };
+		F093897F2175F9E500C902D8 /* GTBannerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTBannerCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +113,8 @@
 		F09389422175F8EB00C902D8 /* ComponentLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				F09389772175F97A00C902D8 /* Helper */,
+				F09389752175F90C00C902D8 /* UIKit */,
 				F09389432175F8EB00C902D8 /* AppDelegate.h */,
 				F09389442175F8EB00C902D8 /* AppDelegate.m */,
 				F09389462175F8EB00C902D8 /* ViewController.h */,
@@ -130,6 +144,36 @@
 				F09389692175F8EC00C902D8 /* Info.plist */,
 			);
 			path = ComponentLibraryUITests;
+			sourceTree = "<group>";
+		};
+		F09389752175F90C00C902D8 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				F09389762175F95600C902D8 /* CarouselScrollView */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		F09389762175F95600C902D8 /* CarouselScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				F093897B2175F9E400C902D8 /* GTBannerCollectionViewCell.h */,
+				F093897F2175F9E500C902D8 /* GTBannerCollectionViewCell.m */,
+				F09389792175F9E400C902D8 /* GTBannerCollectionViewFlowLayout.h */,
+				F093897A2175F9E400C902D8 /* GTBannerCollectionViewFlowLayout.m */,
+				F093897E2175F9E500C902D8 /* GTBannerPageControlView.h */,
+				F093897C2175F9E500C902D8 /* GTBannerPageControlView.m */,
+				F093897D2175F9E500C902D8 /* GTScrollBannerView.h */,
+				F09389782175F9E400C902D8 /* GTScrollBannerView.m */,
+			);
+			path = CarouselScrollView;
+			sourceTree = "<group>";
+		};
+		F09389772175F97A00C902D8 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,8 +307,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F09389482175F8EB00C902D8 /* ViewController.m in Sources */,
+				F09389822175F9E500C902D8 /* GTBannerPageControlView.m in Sources */,
+				F09389802175F9E500C902D8 /* GTScrollBannerView.m in Sources */,
+				F09389832175F9E500C902D8 /* GTBannerCollectionViewCell.m in Sources */,
 				F09389532175F8EC00C902D8 /* main.m in Sources */,
 				F09389452175F8EB00C902D8 /* AppDelegate.m in Sources */,
+				F09389812175F9E500C902D8 /* GTBannerCollectionViewFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
