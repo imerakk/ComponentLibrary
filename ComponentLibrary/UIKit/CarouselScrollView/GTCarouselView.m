@@ -6,56 +6,62 @@
 //  Copyright © 2018年 liuchunxi. All rights reserved.
 //
 
-#import "GTScrollBannerView.h"
-#import "GTBannerCollectionViewFlowLayout.h"
-#import "GTBannerCollectionViewCell.h"
-#import "GTBannerPageControlView.h"
+#import "GTCarouselView.h"
+#import "GTCarouselCollectionViewFlowLayout.h"
+#import "GTCarouselCollectionViewCell.h"
+#import "GTCarouselPageControlView.h"
 
 const CGFloat KControlViewHeight = 5.0;
 const CGFloat KControlViewMarginTop = 12.0;
 
-@interface GTScrollBannerView () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface GTCarouselView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) GTBannerPageControlView *controlView;
-@property (nonatomic, strong) GTBannerCollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) GTCarouselPageControlView *controlView;
+@property (nonatomic, strong) GTCarouselCollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) NSIndexPath *currentIndexPath;
 @property (nonatomic, strong) NSTimer *timer;
 
 @end
 
-@implementation GTScrollBannerView
+@implementation GTCarouselView
 
 #pragma mark - public method
-+ (instancetype)scrollBannerViewWithFrame:(CGRect)frame images:(NSArray<UIImage *> *)images {
-    GTScrollBannerView *bannerView = [[GTScrollBannerView alloc] initWithFrame:frame images:images];
-    return bannerView;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame images:(NSArray<UIImage *> *)images {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.itemSpacing = 0.0;
-        self.autoScrollDelayTime = 3.0;
-        self.itemWidth = [UIScreen mainScreen].bounds.size.width;
-        self.images = images;
         [self addSubview:self.collectionView];
-        
-        if (images.count > 1) {
-            [self addSubview:self.controlView];
-        }
     }
     
     return self;
 }
 
-- (void)refreshView {
-    if (self.images.count > 0) {
-        [self.collectionView reloadData];
-        [self.collectionView layoutIfNeeded];
-        self.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.collectionView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - KControlViewHeight - KControlViewMarginTop);
+    self.controlView.frame = CGRectMake(0, self.bounds.size.height - KControlViewHeight, self.frame.size.width, KControlViewHeight);
+    CGFloat edgeInsets = (self.frame.size.width - self.itemWidth) / 2;
+    if (edgeInsets > 0) {
+        self.collectionView.contentInset = UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
     }
+    [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+}
+
+- (void)refreshView {
+    if (self.pageCount > 0) {
+        [self.collectionView reloadData];
+        self.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+}
+
+- (void)registerCellClass:(Class)itemClass forReuseIdentifier:(NSString *)reuseIdentifier {
+    [self.collectionView registerClass:itemClass forCellWithReuseIdentifier:reuseIdentifier];
+}
+
+- (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)reuseIdentifier forIndex:(NSInteger)index {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    return [self.collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
 }
 
 #pragma mark - private method
@@ -80,8 +86,8 @@ const CGFloat KControlViewMarginTop = 12.0;
 }
 
 - (void)autoScroll {
-    if (self.images.count > 1) {
-        NSInteger nextRow = (self.currentIndexPath.row + 1) % self.images.count;
+    if (self.pageCount > 1) {
+        NSInteger nextRow = (self.currentIndexPath.row + 1) % self.pageCount;
         self.currentIndexPath = [NSIndexPath indexPathForRow:nextRow inSection:self.currentIndexPath.section];
         [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     }
@@ -100,7 +106,28 @@ const CGFloat KControlViewMarginTop = 12.0;
     }
 }
 
+- (NSInteger)pageCount {
+    if (self.datasource && [self.datasource respondsToSelector:@selector(numberOfItemsInCarouselView:)]) {
+        return [self.datasource numberOfItemsInCarouselView:self];
+    }
+    
+    return 0;
+}
+
 #pragma mark - getter && setter
+- (void)setDatasource:(id<GTCarouselViewDataSource>)datasource {
+    _datasource = datasource;
+    
+    if (self.controlView) {
+        [self.controlView removeFromSuperview];
+    }
+    
+    if (self.pageCount >= 1) {
+        self.controlView = [[GTCarouselPageControlView alloc] initWithFrame:CGRectZero indexCount:self.pageCount currentIndex:0];
+        [self addSubview:self.controlView];
+    }
+}
+
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - KControlViewHeight - KControlViewMarginTop) collectionViewLayout:self.flowLayout];
@@ -110,23 +137,14 @@ const CGFloat KControlViewMarginTop = 12.0;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.pagingEnabled = YES;
-        _collectionView.clipsToBounds = NO;
-        [_collectionView registerClass:[GTBannerCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([GTBannerCollectionViewCell class])];
+        [_collectionView registerClass:[GTCarouselCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([GTCarouselCollectionViewCell class])];
     }
     return _collectionView;
 }
 
-- (UIView *)controlView {
-    if (!_controlView) {
-        _controlView = [[GTBannerPageControlView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - KControlViewHeight, self.frame.size.width, KControlViewHeight) indexCount:self.images.count currentIndex:0];
-    }
-    
-    return _controlView;
-}
-
-- (GTBannerCollectionViewFlowLayout *)flowLayout {
+- (GTCarouselCollectionViewFlowLayout *)flowLayout {
     if (!_flowLayout) {
-        _flowLayout = [[GTBannerCollectionViewFlowLayout alloc] init];
+        _flowLayout = [[GTCarouselCollectionViewFlowLayout alloc] init];
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _flowLayout.scale = 0.9;
     }
@@ -136,18 +154,14 @@ const CGFloat KControlViewMarginTop = 12.0;
 
 - (void)setItemWidth:(CGFloat)itemWidth {
     _itemWidth = itemWidth;
-    self.flowLayout.itemSize = CGSizeMake(itemWidth, self.collectionView.frame.size.height);
-    self.flowLayout.minimumLineSpacing = self.itemSpacing - self.flowLayout.itemSize.width * (1 - _flowLayout.scale) * 0.5;
     
-    CGFloat edgeInsets = (self.frame.size.width - itemWidth) / 2;
-    if (edgeInsets > 0) {
-        _collectionView.contentInset = UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
-    }
+    self.flowLayout.itemWidth = itemWidth;
 }
 
 - (void)setItemSpacing:(CGFloat)itemSpacing {
     _itemSpacing = itemSpacing;
-    self.flowLayout.minimumLineSpacing = self.itemSpacing - self.flowLayout.itemSize.width * (1 - _flowLayout.scale) * 0.5;
+    
+    self.flowLayout.itemSpacing = itemSpacing;
 }
 
 - (void)setAutoScrollEnable:(BOOL)autoScrollEnable {
@@ -163,19 +177,21 @@ const CGFloat KControlViewMarginTop = 12.0;
 
 #pragma mark - uicollection datasource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    GTBannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([GTBannerCollectionViewCell class]) forIndexPath:indexPath];
-    cell.image = self.images[indexPath.row];
-    cell.cornerRadius = 10;
+    UICollectionViewCell *cell = [UICollectionViewCell new];
+    if ([self.datasource respondsToSelector:@selector(carouselView:cellForRowAtIndex:)]) {
+        cell =  [self.datasource carouselView:self cellForRowAtIndex:indexPath.row];
+    }
+    
     return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.images.count;
+    return self.pageCount;
 }
 
 #pragma mark - uicollection delegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    NSInteger maxIndex = self.images.count - 1;
+    NSInteger maxIndex = self.pageCount - 1;
     NSInteger minIndex = 0;
     
     if (velocity.x > 0 && self.currentIndexPath.row == maxIndex) {
@@ -201,7 +217,7 @@ const CGFloat KControlViewMarginTop = 12.0;
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
     if(self.currentIndexPath != nil &&
-       self.currentIndexPath.row < self.images.count &&
+       self.currentIndexPath.row < self.pageCount &&
        self.currentIndexPath.row >= 0) {
         // 中间一张轮播,居中显示
         [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
@@ -219,9 +235,18 @@ const CGFloat KControlViewMarginTop = 12.0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.images.count > 1) {
+    if (self.pageCount > 1) {
         CGFloat currentProgress = (scrollView.contentOffset.x + scrollView.contentInset.left) / (self.flowLayout.itemSize.width + self.flowLayout.minimumLineSpacing);
-        self.controlView.progress = currentProgress;
+        
+        if (!isnan(currentProgress)) {
+            self.controlView.progress = currentProgress;
+        }
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(carouselView:didSelectedItemAtIndex:)]) {
+        [self.delegate carouselView:self didSelectedItemAtIndex:indexPath.row];
     }
 }
 

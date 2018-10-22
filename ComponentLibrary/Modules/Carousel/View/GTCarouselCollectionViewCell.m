@@ -6,20 +6,15 @@
 //  Copyright © 2018年 liuchunxi. All rights reserved.
 //
 
-#import "GTBannerCollectionViewCell.h"
-#define UIColorFromRGB(rgbValue)    [UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 \
-green:((float)(((rgbValue) & 0x00FF00) >> 8))/255.0 \
-blue:((float)((rgbValue) & 0x0000FF))/255.0 \
-alpha:1.0]
+#import "GTCarouselCollectionViewCell.h"
 
-
-@interface GTBannerCollectionViewCell ()
+@interface GTCarouselCollectionViewCell ()
 
 @property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
-@implementation GTBannerCollectionViewCell
+@implementation GTCarouselCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

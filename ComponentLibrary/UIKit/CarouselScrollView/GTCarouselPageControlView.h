@@ -10,9 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GTBannerPageControlView : UIView
+@interface GTCarouselPageControlView : UIView
 
 @property (nonatomic, assign) CGFloat progress;
+@property (nonatomic, assign) NSInteger unselectedColor;
+@property (nonatomic, assign) NSInteger selectedColor;
 
 - (instancetype)initWithFrame:(CGRect)frame indexCount:(NSInteger)indexCount currentIndex:(NSInteger)currentIndex;
 

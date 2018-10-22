@@ -6,9 +6,9 @@
 //  Copyright © 2018年 liuchunxi. All rights reserved.
 //
 
-#import "GTBannerCollectionViewFlowLayout.h"
+#import "GTCarouselCollectionViewFlowLayout.h"
 
-@implementation GTBannerCollectionViewFlowLayout
+@implementation GTCarouselCollectionViewFlowLayout
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     // 1.获取cell对应的attributes对象
@@ -25,13 +25,17 @@
         // 3.2 距离越大，缩放比越小，距离越小，缩放比越大
         CGFloat scale = 1 - (1 - self.scale) * (distance / (self.itemSize.width + self.minimumLineSpacing));
         attr.transform = CGAffineTransformMakeScale(scale, scale);
-        NSLog(@"%f", scale);
     }
     
     [[self.collectionView visibleCells] makeObjectsPerformSelector:@selector(setNeedsLayout)];
     [[self.collectionView visibleCells] makeObjectsPerformSelector:@selector(layoutIfNeeded)];
     
     return arrayAttrs;
+}
+
+- (void)prepareLayout {
+    self.itemSize = CGSizeMake(self.itemWidth, self.collectionView.frame.size.height);
+    self.minimumLineSpacing = self.itemSpacing - self.itemWidth * (1 - self.scale) * 0.5;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {

@@ -1,5 +1,5 @@
 //
-//  HBBannerCollectionViewFlowLayout.h
+//  HBBannerCollectionViewCell.h
 //  demo
 //
 //  Created by liuchunxi on 2018/10/12.
@@ -10,9 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GTBannerCollectionViewFlowLayout : UICollectionViewFlowLayout
+@interface GTCarouselCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, assign) CGFloat scale;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, assign) CGFloat cornerRadius;
 
 @end
 

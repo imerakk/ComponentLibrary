@@ -6,27 +6,20 @@
 //  Copyright © 2018年 liuchunxi. All rights reserved.
 //
 
-#import "GTBannerPageControlView.h"
-
-#define UIColorFromRGB(rgbValue)    [UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 \
-green:((float)(((rgbValue) & 0x00FF00) >> 8))/255.0 \
-blue:((float)((rgbValue) & 0x0000FF))/255.0 \
-alpha:1.0]
+#import "GTCarouselPageControlView.h"
 
 static const CGFloat kPageControlItemMarginLeft = 4.0;
 
-@interface GTBannerPageControlView ()
+@interface GTCarouselPageControlView ()
 
 @property (nonatomic, assign) NSInteger indexCount;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) NSMutableArray *controlViews;
-@property (nonatomic, assign) NSInteger unselectedColor;
-@property (nonatomic, assign) NSInteger selectedColor;
 
 @end
 
-@implementation GTBannerPageControlView
+@implementation GTCarouselPageControlView
 
 - (instancetype)initWithFrame:(CGRect)frame indexCount:(NSInteger)indexCount currentIndex:(NSInteger)currentIndex {
     self = [super initWithFrame:frame];
