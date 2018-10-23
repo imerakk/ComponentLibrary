@@ -30,6 +30,8 @@
     carouselView.delegate = self;
     carouselView.itemWidth = SCREEN_WIDTH - 40;
     carouselView.itemSpacing = 10;
+    carouselView.autoScrollEnable = YES;
+    carouselView.autoScrollDelayTime = 5.0;
     carouselView.frame = CGRectMake(0, 150, self.view.width, 200);
     [carouselView refreshView];
     [carouselView registerCellClass:[GTCarouselCollectionViewCell class] forReuseIdentifier:NSStringFromClass([GTCarouselCollectionViewCell class])];

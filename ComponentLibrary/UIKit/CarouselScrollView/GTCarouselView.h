@@ -35,7 +35,7 @@ extern const CGFloat KControlViewMarginTop;
 @property (nonatomic, assign) CGFloat itemSpacing;
 @property (nonatomic, assign) CGFloat itemWidth;
 @property (nonatomic, assign) BOOL autoScrollEnable;
-@property (nonatomic, assign) CGFloat autoScrollDelayTime;
+@property (nonatomic, assign) CGFloat autoScrollDelayTime; //default 3.0
 
 - (void)refreshView;
 - (void)registerCellClass:(Class)itemClass forReuseIdentifier:(NSString *)reuseIdentifier;

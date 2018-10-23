@@ -10,6 +10,7 @@
 #import "GTCarouselCollectionViewFlowLayout.h"
 #import "GTCarouselCollectionViewCell.h"
 #import "GTCarouselPageControlView.h"
+#import "GTTimer.h"
 
 const CGFloat KControlViewHeight = 5.0;
 const CGFloat KControlViewMarginTop = 12.0;
@@ -20,7 +21,7 @@ const CGFloat KControlViewMarginTop = 12.0;
 @property (nonatomic, strong) GTCarouselPageControlView *controlView;
 @property (nonatomic, strong) GTCarouselCollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) NSIndexPath *currentIndexPath;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) GTTimer *timer;
 
 @end
 
@@ -30,6 +31,7 @@ const CGFloat KControlViewMarginTop = 12.0;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _autoScrollDelayTime = 3.0;
         [self addSubview:self.collectionView];
     }
     
@@ -94,9 +96,11 @@ const CGFloat KControlViewMarginTop = 12.0;
 }
 
 - (void)startTimer {
-    if (![self.timer isValid]) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollDelayTime target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
-    }
+    if (self.autoScrollDelayTime == 0) return;
+    if (self.timer && self.timer.timerInterval == self.autoScrollDelayTime) return;
+    
+    [self stopTimer];
+    self.timer = [GTTimer timerWithTimerInterval:self.autoScrollDelayTime target:self selector:@selector(autoScroll) repeats:YES];
 }
 
 - (void)stopTimer {
@@ -167,11 +171,19 @@ const CGFloat KControlViewMarginTop = 12.0;
 - (void)setAutoScrollEnable:(BOOL)autoScrollEnable {
     _autoScrollEnable = autoScrollEnable;
     
-    if (autoScrollEnable) {
+    if (_autoScrollEnable) {
         [self startTimer];
     }
     else {
         [self stopTimer];
+    }
+}
+
+- (void)setAutoScrollDelayTime:(CGFloat)autoScrollDelayTime {
+    _autoScrollDelayTime = autoScrollDelayTime;
+    
+    if (self.autoScrollEnable) {
+        [self startTimer];
     }
 }
 
@@ -248,6 +260,10 @@ const CGFloat KControlViewMarginTop = 12.0;
     if ([self.delegate respondsToSelector:@selector(carouselView:didSelectedItemAtIndex:)]) {
         [self.delegate carouselView:self didSelectedItemAtIndex:indexPath.row];
     }
+}
+
+- (void)dealloc {
+    NSLog(@"%@", self);
 }
 
 @end
