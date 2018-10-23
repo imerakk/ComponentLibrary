@@ -20,8 +20,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, assign) BOOL repeats;
 @property (nonatomic, readonly, assign) NSTimeInterval timerInterval;
 
-+ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval target:(id)target selector:(SEL)selector repeats:(BOOL)repeats;
-+ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval block:(Block)block repeats:(BOOL)repeats;
++ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval
+                                target:(id)target
+                              selector:(SEL)selector
+                               repeats:(BOOL)repeats;
+
++ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval
+                                 block:(Block)block
+                               repeats:(BOOL)repeats;
 
 - (void)invalidate;
 

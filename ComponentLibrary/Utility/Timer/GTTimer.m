@@ -23,24 +23,23 @@
 @implementation GTTimer
 
 + (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval target:(id)target selector:(SEL)selector repeats:(BOOL)repeats {
-    GTTimer *timer = [[GTTimer alloc] initWithTimerInterval:timerInterval delay:timerInterval repeats:repeats];
-    timer.target = target;
-    timer.selector = selector;
-    return timer;
+    return [[GTTimer alloc] initWithTimerInterval:timerInterval target:target selector:selector block:nil delay:timerInterval repeats:repeats];
 }
 
 + (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval block:(Block)block repeats:(BOOL)repeats {
-    GTTimer *timer = [[GTTimer alloc] initWithTimerInterval:timerInterval delay:timerInterval repeats:repeats];
-    timer.block = block;
-    return timer;
+    return [[GTTimer alloc] initWithTimerInterval:timerInterval target:nil selector:NULL block:block delay:timerInterval repeats:YES];
 }
 
-- (instancetype)initWithTimerInterval:(NSTimeInterval)timerInterval delay:(NSTimeInterval)delay repeats:(BOOL)repeats {
+- (instancetype)initWithTimerInterval:(NSTimeInterval)timerInterval target:(id)target selector:(SEL)selector block:(Block)block delay:(NSTimeInterval)delay repeats:(BOOL)repeats {
     self = [super init];
     if (self) {
         _valid = YES;
         _repeats = repeats;
         _timerInterval = timerInterval;
+        _target = target;
+        _selector = selector;
+        _block = block;
+        
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
         dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, delay * NSEC_PER_SEC), timerInterval * NSEC_PER_SEC, 0);
         __weak typeof(self) weakSelf = self;

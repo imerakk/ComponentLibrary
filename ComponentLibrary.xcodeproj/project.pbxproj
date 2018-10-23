@@ -196,8 +196,8 @@
 		F09389422175F8EB00C902D8 /* ComponentLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				F031CBA8217DBD72008DD80F /* Macro */,
 				F031CB9C217D756C008DD80F /* Modules */,
+				F031CBA8217DBD72008DD80F /* Macro */,
 				F09389772175F97A00C902D8 /* Utility */,
 				F09389752175F90C00C902D8 /* UIKit */,
 				F09389432175F8EB00C902D8 /* AppDelegate.h */,
