@@ -53,6 +53,11 @@
 - (void)fire {
     if(!self.isValid) return;
     
+    if (!self.target && !self.block) {
+        [self invalidate];
+        return;
+    }
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if (self.target && [self.target respondsToSelector:self.selector]) {
@@ -61,10 +66,6 @@
 #pragma clang diagnostic pop
     if (self.block) {
         self.block(self);
-    }
-    
-    if (!self.target && !self.block) {
-        [self invalidate];
     }
     
     if (!self.repeats) {
@@ -78,6 +79,10 @@
     self.target = nil;
     self.block = nil;
     self.valid = NO;
+}
+
+- (void)dealloc {
+    [self invalidate];
 }
 
 @end

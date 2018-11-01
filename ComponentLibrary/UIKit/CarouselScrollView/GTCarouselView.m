@@ -47,7 +47,10 @@ const CGFloat KControlViewMarginTop = 12.0;
     if (edgeInsets > 0) {
         self.collectionView.contentInset = UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
     }
-    [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    
+    if (self.currentIndexPath) {
+        [self.collectionView scrollToItemAtIndexPath:self.currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    }
 }
 
 - (void)refreshView {
@@ -260,10 +263,6 @@ const CGFloat KControlViewMarginTop = 12.0;
     if ([self.delegate respondsToSelector:@selector(carouselView:didSelectedItemAtIndex:)]) {
         [self.delegate carouselView:self didSelectedItemAtIndex:indexPath.row];
     }
-}
-
-- (void)dealloc {
-    NSLog(@"%@", self);
 }
 
 @end
