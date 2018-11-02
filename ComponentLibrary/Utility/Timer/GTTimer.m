@@ -74,11 +74,13 @@
 }
 
 - (void)invalidate {
-    dispatch_source_cancel(_timer);
-    self.timer = NULL;
-    self.target = nil;
-    self.block = nil;
-    self.valid = NO;
+    if (self.isValid) {
+        dispatch_source_cancel(_timer);
+        self.timer = NULL;
+        self.target = nil;
+        self.block = nil;
+        self.valid = NO;
+    }
 }
 
 - (void)dealloc {
