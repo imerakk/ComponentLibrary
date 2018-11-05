@@ -61,6 +61,7 @@
 		F031CBB0217DD387008DD80F /* GTTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTimer.m; sourceTree = "<group>"; };
 		F076FE0C218C2C4500B3C2EA /* GTExtendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendView.h; sourceTree = "<group>"; };
 		F076FE0D218C2C4500B3C2EA /* GTExtendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTExtendView.m; sourceTree = "<group>"; };
+		F076FE1521905DC200B3C2EA /* GTExtendViewChainableBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendViewChainableBlocks.h; sourceTree = "<group>"; };
 		F09389402175F8EB00C902D8 /* ComponentLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComponentLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09389432175F8EB00C902D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F09389442175F8EB00C902D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -176,6 +177,16 @@
 			path = Timer;
 			sourceTree = "<group>";
 		};
+		F076FE1421905D8500B3C2EA /* GTExtendView */ = {
+			isa = PBXGroup;
+			children = (
+				F076FE1521905DC200B3C2EA /* GTExtendViewChainableBlocks.h */,
+				F076FE0C218C2C4500B3C2EA /* GTExtendView.h */,
+				F076FE0D218C2C4500B3C2EA /* GTExtendView.m */,
+			);
+			path = GTExtendView;
+			sourceTree = "<group>";
+		};
 		F09389372175F8EB00C902D8 = {
 			isa = PBXGroup;
 			children = (
@@ -236,9 +247,8 @@
 		F09389752175F90C00C902D8 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				F076FE1421905D8500B3C2EA /* GTExtendView */,
 				F09389762175F95600C902D8 /* CarouselScrollView */,
-				F076FE0C218C2C4500B3C2EA /* GTExtendView.h */,
-				F076FE0D218C2C4500B3C2EA /* GTExtendView.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
