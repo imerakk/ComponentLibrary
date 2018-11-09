@@ -168,15 +168,6 @@
 			path = Macro;
 			sourceTree = "<group>";
 		};
-		F031CBAE217DD354008DD80F /* Timer */ = {
-			isa = PBXGroup;
-			children = (
-				F031CBAF217DD387008DD80F /* GTTimer.h */,
-				F031CBB0217DD387008DD80F /* GTTimer.m */,
-			);
-			path = Timer;
-			sourceTree = "<group>";
-		};
 		F076FE1421905D8500B3C2EA /* GTExtendView */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +238,7 @@
 		F09389752175F90C00C902D8 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				F0E8B777219598D3000FCB20 /* Category */,
 				F076FE1421905D8500B3C2EA /* GTExtendView */,
 				F09389762175F95600C902D8 /* CarouselScrollView */,
 			);
@@ -269,11 +261,19 @@
 		F09389772175F97A00C902D8 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				F031CBAE217DD354008DD80F /* Timer */,
+				F031CBAF217DD387008DD80F /* GTTimer.h */,
+				F031CBB0217DD387008DD80F /* GTTimer.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		F0E8B777219598D3000FCB20 /* Category */ = {
+			isa = PBXGroup;
+			children = (
 				F031CBA3217D7D9A008DD80F /* UIView+GTLayout.h */,
 				F031CBA4217D7D9A008DD80F /* UIView+GTLayout.m */,
 			);
-			path = Utility;
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
