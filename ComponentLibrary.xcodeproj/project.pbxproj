@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */; };
 		F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */; };
 		F031CB98217D6FA8008DD80F /* GTUIKitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB97217D6FA8008DD80F /* GTUIKitTableViewController.m */; };
 		F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB9A217D7299008DD80F /* GTCellModel.m */; };
@@ -25,6 +26,7 @@
 		F09389812175F9E500C902D8 /* GTCarouselCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897A2175F9E400C902D8 /* GTCarouselCollectionViewFlowLayout.m */; };
 		F09389822175F9E500C902D8 /* GTCarouselPageControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897C2175F9E500C902D8 /* GTCarouselPageControlView.m */; };
 		F09389832175F9E500C902D8 /* GTCarouselCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897F2175F9E500C902D8 /* GTCarouselCollectionViewCell.m */; };
+		F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTCustomNavgationViewController.h; sourceTree = "<group>"; };
+		F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTCustomNavgationViewController.m; sourceTree = "<group>"; };
 		F031CB93217D6B93008DD80F /* GTHomeTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHomeTableViewController.h; sourceTree = "<group>"; };
 		F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHomeTableViewController.m; sourceTree = "<group>"; };
 		F031CB96217D6FA8008DD80F /* GTUIKitTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTUIKitTableViewController.h; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 		F093897D2175F9E500C902D8 /* GTCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTCarouselView.h; sourceTree = "<group>"; };
 		F093897E2175F9E500C902D8 /* GTCarouselPageControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTCarouselPageControlView.h; sourceTree = "<group>"; };
 		F093897F2175F9E500C902D8 /* GTCarouselCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTCarouselCollectionViewCell.m; sourceTree = "<group>"; };
+		F0E8B781219AB35D000FCB20 /* GTContainerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTContainerViewController.h; sourceTree = "<group>"; };
+		F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,9 +117,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F00873B021A3E1AE00106E50 /* CustomTransitionViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomTransitionViewController;
+			sourceTree = "<group>";
+		};
 		F031CB9C217D756C008DD80F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F00873B021A3E1AE00106E50 /* CustomTransitionViewController */,
 				F031CB9F217D7622008DD80F /* Carousel */,
 				F031CB9D217D75E2008DD80F /* HomePage */,
 			);
@@ -238,14 +252,14 @@
 		F09389752175F90C00C902D8 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				F0E8B780219AB31C000FCB20 /* View */,
+				F0E8B77F219AB2DC000FCB20 /* ViewController */,
 				F0E8B777219598D3000FCB20 /* Category */,
-				F076FE1421905D8500B3C2EA /* GTExtendView */,
-				F09389762175F95600C902D8 /* CarouselScrollView */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
 		};
-		F09389762175F95600C902D8 /* CarouselScrollView */ = {
+		F09389762175F95600C902D8 /* GTCarouselScrollView */ = {
 			isa = PBXGroup;
 			children = (
 				F09389792175F9E400C902D8 /* GTCarouselCollectionViewFlowLayout.h */,
@@ -255,7 +269,7 @@
 				F093897D2175F9E500C902D8 /* GTCarouselView.h */,
 				F09389782175F9E400C902D8 /* GTCarouselView.m */,
 			);
-			path = CarouselScrollView;
+			path = GTCarouselScrollView;
 			sourceTree = "<group>";
 		};
 		F09389772175F97A00C902D8 /* Utility */ = {
@@ -274,6 +288,26 @@
 				F031CBA4217D7D9A008DD80F /* UIView+GTLayout.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		F0E8B77F219AB2DC000FCB20 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0E8B781219AB35D000FCB20 /* GTContainerViewController.h */,
+				F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */,
+				F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */,
+				F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		F0E8B780219AB31C000FCB20 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F076FE1421905D8500B3C2EA /* GTExtendView */,
+				F09389762175F95600C902D8 /* GTCarouselScrollView */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +441,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */,
+				F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */,
+				F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */,
 				F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */,
 				F09389822175F9E500C902D8 /* GTCarouselPageControlView.m in Sources */,
 				F031CBA2217D76BC008DD80F /* GTCarouselViewController.m in Sources */,

@@ -29,7 +29,11 @@
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
-    self.dataSource = @[model1];
+    GTCellModel *model2 = [GTCellModel modelFactoryWithTitle:@"CustomTransitionViewController" didClickHander:^{
+        
+    }];
+    
+    self.dataSource = @[model1, model2];
 }
 
 #pragma mark - Table view data source
