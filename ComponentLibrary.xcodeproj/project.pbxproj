@@ -49,6 +49,7 @@
 /* Begin PBXFileReference section */
 		F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTCustomNavgationViewController.h; sourceTree = "<group>"; };
 		F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTCustomNavgationViewController.m; sourceTree = "<group>"; };
+		F00873B821A5011000106E50 /* GTTransitionViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTTransitionViewControllerProtocol.h; sourceTree = "<group>"; };
 		F031CB93217D6B93008DD80F /* GTHomeTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHomeTableViewController.h; sourceTree = "<group>"; };
 		F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHomeTableViewController.m; sourceTree = "<group>"; };
 		F031CB96217D6FA8008DD80F /* GTUIKitTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTUIKitTableViewController.h; sourceTree = "<group>"; };
@@ -297,6 +298,7 @@
 				F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */,
 				F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */,
 				F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */,
+				F00873B821A5011000106E50 /* GTTransitionViewControllerProtocol.h */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

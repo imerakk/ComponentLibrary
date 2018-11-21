@@ -8,7 +8,9 @@
 
 #import "GTCustomNavgationViewController.h"
 
-@interface GTCustomNavgationAnimator : NSObject <GTContainerViewControllerDelegate, UIViewControllerAnimatedTransitioning>
+@interface GTCustomNavgationAnimator : NSObject <GTContainerViewControllerDelegate, GTViewControllerAnimatedTransitioning>
+
+@property (nonatomic, assign) UINavigationControllerOperation operation;
 
 @end
 
@@ -16,23 +18,60 @@
 
 #pragma mark - GTContainerViewControllerDelegate
 - (nullable id <UIViewControllerInteractiveTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
-                                      interactionControllerForAnimationController:(id <UIViewControllerContextTransitioningExtension>)animationController {
+                                      interactionControllerForAnimationController:(id <GTViewControllerContextTransitioning>)animationController {
     return nil;
 }
 
-- (nullable id <UIViewControllerAnimatedTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
+- (nullable id <GTViewControllerAnimatedTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
                                                             fromViewController:(UIViewController *)fromVC
                                                               toViewController:(UIViewController *)toVC {
+    NSInteger fromIndex = [containerViewController.viewControllers indexOfObject:fromVC];
+    NSInteger toIndex = [containerViewController.viewControllers indexOfObject:toVC];
+    if (fromIndex == toIndex) {
+        self.operation = UINavigationControllerOperationNone;
+    }
+    else if (fromIndex > toIndex) {
+        self.operation = UINavigationControllerOperationPop;
+    }
+    else {
+        self.operation = UINavigationControllerOperationPush;
+    }
+    
     return self;
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:(id<GTViewControllerContextTransitioning>)transitionContext {
     return 3;
 }
 
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+- (void)animateTransition:(id<GTViewControllerContextTransitioning>)transitionContext {
+    if (self.operation == UINavigationControllerOperationNone) {
+        return;
+    }
     
+    UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
+    UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
+    
+    
+    
+    if (self.operation ==UINavigationControllerOperationPush) {
+        [transitionContext addAnimation:^{
+            
+        } duration:[self transitionDuration:transitionContext] animationCurve:UIViewAnimationCurveLinear compeletion:^{
+            
+        }];
+    }
+    else {
+        [transitionContext addAnimation:^{
+            
+        } duration:[self transitionDuration:transitionContext] animationCurve:UIViewAnimationCurveLinear compeletion:^{
+            
+        }];
+    }
+
+    
+    [transitionContext startAnimations];
 }
 
 @end

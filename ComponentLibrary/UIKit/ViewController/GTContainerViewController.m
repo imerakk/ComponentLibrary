@@ -8,7 +8,7 @@
 
 #import "GTContainerViewController.h"
 
-@interface GTViewControllerContextTransitioning : NSObject <UIViewControllerContextTransitioningExtension>
+@interface GTViewControllerContextTransitioning : NSObject <GTViewControllerContextTransitioning>
 
 @property(nonatomic, readonly) UIView *containerView;
 
@@ -17,7 +17,7 @@
 @property(nonatomic, readonly) BOOL transitionWasCancelled;
 @property(nonatomic, readonly) UIModalPresentationStyle presentationStyle;
 @property(nonatomic, readonly) CGAffineTransform targetTransform;
-@property (nonatomic, copy) void (^compeletionBlock)(void);
+@property (nonatomic, copy) void (^compeletionBlock)(BOOL compeletion);
 
 - (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController;
 
@@ -27,6 +27,10 @@
 @interface GTContainerViewController ()
 
 @property (nonatomic, strong) NSMutableArray *mutViewControllers;
+@property (nonatomic, strong) UIViewController *needRemovedViewController;
+
+@property (nonatomic, strong) UIViewController *fromViewController;
+@property (nonatomic, strong) UIViewController *toViewController;
 
 @end
 
@@ -64,35 +68,40 @@
 }
 
 - (void)gt_removeChildViewController:(UIViewController *)viewController {
-    NSAssert(![self.mutViewControllers containsObject:viewController], @"controller not add to containerViewController");
-    NSAssert(self.mutViewControllers.count == 1, @"can't remove last child view controller");
-
-    if (self.selectedViewcontroller == viewController) {
-        NSInteger selectedIndex = [self.mutViewControllers indexOfObject:self.selectedViewcontroller];
-        if (selectedIndex > 0) {
-            self.selectedViewcontroller = self.mutViewControllers[selectedIndex - 1];
-        }
-        else {
-            self.selectedViewcontroller = self.mutViewControllers[selectedIndex + 1];
-        }
+    if (![self.mutViewControllers containsObject:viewController] || self.mutViewControllers.count == 1) {
+        return;
     }
-
-    [_mutViewControllers removeObject:viewController];
+    
+    //禁止移除当前正在或即将显示的控制器
+    if (viewController == self.toViewController || viewController ==  self.selectedViewcontroller) {
+        return;
+    }
+    
+    if (viewController == self.fromViewController) { //转场动画完成后再移除
+        self.needRemovedViewController = viewController;
+    }
+    else {
+        [_mutViewControllers removeObject:viewController];
+    }
 }
 
 - (void)setSelectedViewcontroller:(UIViewController *)selectedViewcontroller {
-    NSAssert(![self.mutViewControllers containsObject:selectedViewcontroller], @"selectedViewcontroller must add to containerViewController");
+    if (![self.mutViewControllers containsObject:selectedViewcontroller]) {
+        return;
+    }
     
     [self transitionToChildViewController:selectedViewcontroller];
 }
 
 #pragma mark - private method
 - (void)transitionToChildViewController:(UIViewController *)toViewController {
+    toViewController.view.frame = self.view.bounds;
+    
     UIViewController *fromViewController = self.childViewControllers.count > 0 ? self.childViewControllers[0] : nil;
     if (!fromViewController) {
+        self.selectedViewcontroller = toViewController;
         [self addChildViewController:toViewController];
         [toViewController didMoveToParentViewController:self];
-        toViewController.view.frame = self.view.bounds;
         [self.view addSubview:toViewController.view];
         
         return;
@@ -100,19 +109,31 @@
     
     [fromViewController willMoveToParentViewController:nil];
     
-    id<UIViewControllerAnimatedTransitioning> animator = nil;
+    id<GTViewControllerAnimatedTransitioning> animator = nil;
     if ([self.delegate respondsToSelector:@selector(containerViewController:fromViewController:toViewController:)]) {
         animator = [self.delegate containerViewController:self fromViewController:fromViewController toViewController:toViewController];
     }
     
     GTViewControllerContextTransitioning *contextTransitioning = [[GTViewControllerContextTransitioning alloc] initWithFromViewController:fromViewController toViewController:toViewController];
-    contextTransitioning.compeletionBlock = ^{
-        [fromViewController removeFromParentViewController];
-        [fromViewController.view removeFromSuperview];
-        [self addChildViewController:toViewController];
-        [toViewController didMoveToParentViewController:self];
+    contextTransitioning.compeletionBlock = ^ (BOOL compeletion){
+        if (compeletion) {
+            self.selectedViewcontroller = toViewController;
+            [fromViewController removeFromParentViewController];
+            [fromViewController.view removeFromSuperview];
+            [self addChildViewController:toViewController];
+            [toViewController didMoveToParentViewController:self];
+            
+            if (self.needRemovedViewController) {
+                [self.mutViewControllers removeObject:self.needRemovedViewController];
+            }
+        }
+        
+        self.fromViewController = nil;
+        self.toViewController = nil;
     };
     
+    self.fromViewController = fromViewController;
+    self.toViewController = toViewController;
     [animator animateTransition:contextTransitioning];
 }
 
@@ -157,10 +178,6 @@
     NSString *vcKey = map[key];
     UIViewController *viewController = _viewControllers[vcKey];
     return viewController.view;
-}
-
-- (CGAffineTransform)targetTransform {
-    return CGAffineTransformIdentity;
 }
 
 - (CGRect)initialFrameForViewController:(UIViewController *)vc {
@@ -228,8 +245,8 @@
 }
 
 - (void)completeTransition:(BOOL)didComplete {
-    if (didComplete && self.compeletionBlock) {
-        self.compeletionBlock();
+    if (self.compeletionBlock) {
+        self.compeletionBlock(didComplete);
     }
 }
 
