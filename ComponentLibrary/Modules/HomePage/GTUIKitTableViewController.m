@@ -9,6 +9,8 @@
 #import "GTUIKitTableViewController.h"
 #import "GTCarouselViewController.h"
 #import "GTCellModel.h"
+#import "GTCustomNavgationViewController.h"
+#import "GTFirstViewController.h"
 
 @interface GTUIKitTableViewController ()
 
@@ -30,7 +32,11 @@
     }];
     
     GTCellModel *model2 = [GTCellModel modelFactoryWithTitle:@"CustomTransitionViewController" didClickHander:^{
+        GTFirstViewController *controller = [[GTFirstViewController alloc] init];
         
+        GTCustomNavgationViewController *vc = [[GTCustomNavgationViewController alloc] initWithRootViewController:controller];
+        controller.nav = vc;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
     self.dataSource = @[model1, model2];

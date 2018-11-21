@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */; };
+		F00873BB21A5332700106E50 /* GTFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873BA21A5332700106E50 /* GTFirstViewController.m */; };
+		F00873BE21A5333A00106E50 /* GTSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873BD21A5333A00106E50 /* GTSecondViewController.m */; };
 		F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */; };
 		F031CB98217D6FA8008DD80F /* GTUIKitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB97217D6FA8008DD80F /* GTUIKitTableViewController.m */; };
 		F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB9A217D7299008DD80F /* GTCellModel.m */; };
@@ -50,6 +52,10 @@
 		F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTCustomNavgationViewController.h; sourceTree = "<group>"; };
 		F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTCustomNavgationViewController.m; sourceTree = "<group>"; };
 		F00873B821A5011000106E50 /* GTTransitionViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTTransitionViewControllerProtocol.h; sourceTree = "<group>"; };
+		F00873B921A5332700106E50 /* GTFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTFirstViewController.h; sourceTree = "<group>"; };
+		F00873BA21A5332700106E50 /* GTFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTFirstViewController.m; sourceTree = "<group>"; };
+		F00873BC21A5333A00106E50 /* GTSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTSecondViewController.h; sourceTree = "<group>"; };
+		F00873BD21A5333A00106E50 /* GTSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTSecondViewController.m; sourceTree = "<group>"; };
 		F031CB93217D6B93008DD80F /* GTHomeTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHomeTableViewController.h; sourceTree = "<group>"; };
 		F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHomeTableViewController.m; sourceTree = "<group>"; };
 		F031CB96217D6FA8008DD80F /* GTUIKitTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTUIKitTableViewController.h; sourceTree = "<group>"; };
@@ -121,6 +127,10 @@
 		F00873B021A3E1AE00106E50 /* CustomTransitionViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F00873B921A5332700106E50 /* GTFirstViewController.h */,
+				F00873BA21A5332700106E50 /* GTFirstViewController.m */,
+				F00873BC21A5333A00106E50 /* GTSecondViewController.h */,
+				F00873BD21A5333A00106E50 /* GTSecondViewController.m */,
 			);
 			path = CustomTransitionViewController;
 			sourceTree = "<group>";
@@ -442,10 +452,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F00873BE21A5333A00106E50 /* GTSecondViewController.m in Sources */,
 				F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */,
 				F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */,
 				F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */,
 				F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */,
+				F00873BB21A5332700106E50 /* GTFirstViewController.m in Sources */,
 				F09389822175F9E500C902D8 /* GTCarouselPageControlView.m in Sources */,
 				F031CBA2217D76BC008DD80F /* GTCarouselViewController.m in Sources */,
 				F076FE0E218C2C4500B3C2EA /* GTExtendView.m in Sources */,

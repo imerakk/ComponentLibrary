@@ -42,7 +42,7 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (NSTimeInterval)transitionDuration:(id<GTViewControllerContextTransitioning>)transitionContext {
-    return 3;
+    return 0.2;
 }
 
 - (void)animateTransition:(id<GTViewControllerContextTransitioning>)transitionContext {
@@ -53,21 +53,31 @@
     UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
     UIView *toView = [transitionContext viewForKey:UITransitionContextToViewKey];
     
-    
-    
-    if (self.operation ==UINavigationControllerOperationPush) {
+    if (self.operation == UINavigationControllerOperationPush) {
+        [transitionContext.containerView insertSubview:toView aboveSubview:fromView];
+        CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, transitionContext.containerView.frame.size.width, 0);
+        toView.transform = transform;
         [transitionContext addAnimation:^{
-            
-        } duration:[self transitionDuration:transitionContext] animationCurve:UIViewAnimationCurveLinear compeletion:^{
-            
-        }];
+                                toView.transform = CGAffineTransformIdentity;
+        }
+                               duration:[self transitionDuration:transitionContext]
+                         animationCurve:UIViewAnimationCurveLinear
+                            compeletion:^(id<GTViewControllerContextTransitioning> transitioningContext) {
+                                [transitioningContext completeTransition:![transitioningContext transitionWasCancelled]];
+                            }];
     }
     else {
+        [transitionContext.containerView insertSubview:toView belowSubview:fromView];
+        
+        CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, transitionContext.containerView.frame.size.width, 0);
         [transitionContext addAnimation:^{
-            
-        } duration:[self transitionDuration:transitionContext] animationCurve:UIViewAnimationCurveLinear compeletion:^{
-            
-        }];
+            fromView.transform = transform;
+        }
+                               duration:[self transitionDuration:transitionContext]
+                         animationCurve:UIViewAnimationCurveLinear
+                            compeletion:^(id<GTViewControllerContextTransitioning> transitioningContext) {
+                                [transitioningContext completeTransition:![transitioningContext transitionWasCancelled]];
+                            }];
     }
 
     
@@ -79,6 +89,8 @@
 
 @interface GTCustomNavgationViewController ()
 
+@property (nonatomic, strong) GTCustomNavgationAnimator *animator;
+
 @end
 
 @implementation GTCustomNavgationViewController
@@ -87,6 +99,7 @@
     self = [super initWithViewControllers:@[rootViewController]];
     if (self) {
         GTCustomNavgationAnimator *animator = [GTCustomNavgationAnimator new];
+        self.animator = animator;
         self.delegate = animator;
     }
     return self;
@@ -95,6 +108,7 @@
 - (void)pushViewController:(UIViewController *)viewController {
     [self gt_addChildViewController:viewController];
     self.selectedViewcontroller = viewController;
+    
 }
 
 - (void)popViewController {

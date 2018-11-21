@@ -31,6 +31,7 @@
 
 @property (nonatomic, strong) UIViewController *fromViewController;
 @property (nonatomic, strong) UIViewController *toViewController;
+@property (nonatomic, strong) id<GTViewControllerContextTransitioning> transitionContext;
 
 @end
 
@@ -72,15 +73,24 @@
         return;
     }
     
-    //禁止移除当前正在或即将显示的控制器
-    if (viewController == self.toViewController || viewController ==  self.selectedViewcontroller) {
-        return;
-    }
-    
-    if (viewController == self.fromViewController) { //转场动画完成后再移除
-        self.needRemovedViewController = viewController;
+    //正在做转场动画
+    if (self.fromViewController || self.toViewController) {
+        if (viewController == self.toViewController) {
+            return;
+        }
+        
+        if (viewController == self.fromViewController) {
+            self.needRemovedViewController = viewController;
+        }
+        else {
+            [_mutViewControllers removeObject:viewController];
+        }
     }
     else {
+        if (viewController == self.selectedViewcontroller) {
+            return;
+        }
+        
         [_mutViewControllers removeObject:viewController];
     }
 }
@@ -99,7 +109,7 @@
     
     UIViewController *fromViewController = self.childViewControllers.count > 0 ? self.childViewControllers[0] : nil;
     if (!fromViewController) {
-        self.selectedViewcontroller = toViewController;
+        _selectedViewcontroller = toViewController;
         [self addChildViewController:toViewController];
         [toViewController didMoveToParentViewController:self];
         [self.view addSubview:toViewController.view];
@@ -114,27 +124,49 @@
         animator = [self.delegate containerViewController:self fromViewController:fromViewController toViewController:toViewController];
     }
     
-    GTViewControllerContextTransitioning *contextTransitioning = [[GTViewControllerContextTransitioning alloc] initWithFromViewController:fromViewController toViewController:toViewController];
-    contextTransitioning.compeletionBlock = ^ (BOOL compeletion){
-        if (compeletion) {
-            self.selectedViewcontroller = toViewController;
-            [fromViewController removeFromParentViewController];
-            [fromViewController.view removeFromSuperview];
-            [self addChildViewController:toViewController];
-            [toViewController didMoveToParentViewController:self];
-            
-            if (self.needRemovedViewController) {
-                [self.mutViewControllers removeObject:self.needRemovedViewController];
+    if (animator) {
+        GTViewControllerContextTransitioning *contextTransitioning = [[GTViewControllerContextTransitioning alloc] initWithFromViewController:fromViewController toViewController:toViewController];
+        __weak typeof(self) weakSelf = self;
+        contextTransitioning.compeletionBlock = ^ (BOOL compeletion){
+            if (compeletion) {
+                if (weakSelf) {
+                    __strong typeof(self) strongSelf = weakSelf;
+                    strongSelf->_selectedViewcontroller = toViewController;
+                }
+                
+                [fromViewController removeFromParentViewController];
+                [fromViewController.view removeFromSuperview];
+                [weakSelf addChildViewController:toViewController];
+                [toViewController didMoveToParentViewController:weakSelf];
+                
+                if (weakSelf.needRemovedViewController) {
+                    [weakSelf.mutViewControllers removeObject:weakSelf.needRemovedViewController];
+                }
             }
-        }
+            
+            self.fromViewController = nil;
+            self.toViewController = nil;
+        };
         
-        self.fromViewController = nil;
-        self.toViewController = nil;
-    };
-    
-    self.fromViewController = fromViewController;
-    self.toViewController = toViewController;
-    [animator animateTransition:contextTransitioning];
+        self.fromViewController = fromViewController;
+        self.toViewController = toViewController;
+        self.transitionContext = contextTransitioning;
+        [animator animateTransition:contextTransitioning];
+    }
+    else {
+        _selectedViewcontroller = toViewController;
+        
+        [fromViewController removeFromParentViewController];
+        [fromViewController.view removeFromSuperview];
+        [self addChildViewController:toViewController];
+        [toViewController didMoveToParentViewController:self];
+        [self.view addSubview:toViewController.view];
+        
+        if (self.needRemovedViewController) {
+            [self.mutViewControllers removeObject:self.needRemovedViewController];
+        }
+    }
+
 }
 
 @end
@@ -159,6 +191,7 @@
                              UITransitionContextToViewControllerKey: toViewController
                              };
         _containerViewController = fromViewController.parentViewController;
+        _containerView = _containerViewController.view;
         _animators = [NSMutableArray array];
         _transitionWasCancelled = NO;
     }
@@ -201,11 +234,11 @@
 - (void)addAnimation:(void (^)(void))animation
             duration:(NSTimeInterval)duration
       animationCurve:(UIViewAnimationCurve)animationCurve
-         compeletion:(void (^)(void))compeletion {
+         compeletion:(void (^)(id<GTViewControllerContextTransitioning> transitioningContext))compeletion {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration curve:animationCurve animations:animation];
     [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
         if (compeletion) {
-            compeletion();
+            compeletion(self);
         }
     }];
     [_animators addObject:animator];

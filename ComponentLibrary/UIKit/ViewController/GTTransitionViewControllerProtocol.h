@@ -33,7 +33,7 @@
 - (void)addAnimation:(void (^)(void))animation
             duration:(NSTimeInterval)duration
       animationCurve:(UIViewAnimationCurve)animationCurve
-         compeletion:(void (^)(void))compeletion;
+         compeletion:(void (^)(id<GTViewControllerContextTransitioning> transitioningContext))compeletion;
 
 - (void)startAnimations;
 
