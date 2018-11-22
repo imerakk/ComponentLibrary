@@ -9,21 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "GTTransitionViewControllerProtocol.h"
 
-@class GTContainerViewController;
-
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol GTContainerViewControllerDelegate <NSObject>
+@interface GTViewControllerContextTransitioning : NSObject <GTViewControllerContextTransitioning>
 
-- (nullable id <UIViewControllerInteractiveTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
-                                      interactionControllerForAnimationController:(id <GTViewControllerContextTransitioning>)animationController NS_AVAILABLE_IOS(10_0);
+@property(nonatomic, readonly) UIView *containerView;
+@property (nonatomic, strong) id<GTViewControllerAnimatedTransitioning> animator;
 
-- (nullable id <GTViewControllerAnimatedTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
-                                                            fromViewController:(UIViewController *)fromVC
-                                                              toViewController:(UIViewController *)toVC  NS_AVAILABLE_IOS(10_0);
+@property(nonatomic, readonly, getter=isAnimated) BOOL animated;
+@property(nonatomic, readonly, getter=isInteractive) BOOL interactive; // This indicates whether the transition is currently interactive.
+@property(nonatomic, readonly) BOOL transitionWasCancelled;
+@property(nonatomic, readonly) UIModalPresentationStyle presentationStyle;
+@property(nonatomic, readonly) CGAffineTransform targetTransform;
+@property (nonatomic, copy) void (^compeletionBlock)(BOOL compeletion);
+
+- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController;
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////
 @interface GTContainerViewController : UIViewController
 
 @property (nonatomic, readonly, strong) NSArray *viewControllers;
@@ -42,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)gt_addChildViewController:(UIViewController *)viewController;
 
 /**
- 移除子控制器，如果移除的子控制器是当前显示的控制器，则显示栈顶的控制器视图
+ 移除子控制器，禁止移除正在显示的子控制器
 
  @param viewController 子控制器
  */

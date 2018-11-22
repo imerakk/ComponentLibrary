@@ -8,22 +8,6 @@
 
 #import "GTContainerViewController.h"
 
-@interface GTViewControllerContextTransitioning : NSObject <GTViewControllerContextTransitioning>
-
-@property(nonatomic, readonly) UIView *containerView;
-
-@property(nonatomic, readonly, getter=isAnimated) BOOL animated;
-@property(nonatomic, readonly, getter=isInteractive) BOOL interactive; // This indicates whether the transition is currently interactive.
-@property(nonatomic, readonly) BOOL transitionWasCancelled;
-@property(nonatomic, readonly) UIModalPresentationStyle presentationStyle;
-@property(nonatomic, readonly) CGAffineTransform targetTransform;
-@property (nonatomic, copy) void (^compeletionBlock)(BOOL compeletion);
-
-- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController;
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////////////
 @interface GTContainerViewController ()
 
 @property (nonatomic, strong) NSMutableArray *mutViewControllers;
@@ -126,6 +110,7 @@
     
     if (animator) {
         GTViewControllerContextTransitioning *contextTransitioning = [[GTViewControllerContextTransitioning alloc] initWithFromViewController:fromViewController toViewController:toViewController];
+        contextTransitioning.animator = animator;
         __weak typeof(self) weakSelf = self;
         contextTransitioning.compeletionBlock = ^ (BOOL compeletion){
             if (compeletion) {
@@ -148,10 +133,22 @@
             self.toViewController = nil;
         };
         
+        id<GTViewControllerInteractiveTransitioning> interactiveTransiting = nil;
+        if ([self.delegate respondsToSelector:@selector(containerViewController:interactionControllerForAnimationController:)]) {
+            interactiveTransiting = [self.delegate containerViewController:self interactionControllerForAnimationController:contextTransitioning];
+        }
+        
+        if (interactiveTransiting) {
+            [interactiveTransiting startInteractiveTransition:contextTransitioning];
+        }
+        else {
+            [animator animateTransition:contextTransitioning];
+            [contextTransitioning startAnimations];
+        }
+        
         self.fromViewController = fromViewController;
         self.toViewController = toViewController;
         self.transitionContext = contextTransitioning;
-        [animator animateTransition:contextTransitioning];
     }
     else {
         _selectedViewcontroller = toViewController;

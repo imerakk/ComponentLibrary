@@ -9,6 +9,8 @@
 #ifndef GTTransitionViewControllerProtocol_h
 #define GTTransitionViewControllerProtocol_h
 
+@class GTContainerViewController;
+
 @protocol GTViewControllerContextTransitioning <NSObject>
 
 @property(nonatomic, readonly) UIView *containerView;
@@ -46,7 +48,22 @@
 
 @end
 
+@protocol GTViewControllerInteractiveTransitioning <NSObject>
 
+- (void)startInteractiveTransition:(id <GTViewControllerContextTransitioning>)transitionContext;
+
+@end
+
+@protocol GTContainerViewControllerDelegate <NSObject>
+
+- (nullable id <GTViewControllerInteractiveTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
+                                      interactionControllerForAnimationController:(id <GTViewControllerContextTransitioning>)animationController NS_AVAILABLE_IOS(10_0);
+
+- (nullable id <GTViewControllerAnimatedTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
+                                                            fromViewController:(UIViewController *)fromVC
+                                                              toViewController:(UIViewController *)toVC  NS_AVAILABLE_IOS(10_0);
+
+@end
 
 
 #endif /* GTTransitionViewControllerProtocol_h */

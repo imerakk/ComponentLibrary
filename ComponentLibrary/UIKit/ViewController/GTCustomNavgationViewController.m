@@ -7,19 +7,90 @@
 //
 
 #import "GTCustomNavgationViewController.h"
+#import "GTPercentDrivenInteractiveTransition.h"
 
 @interface GTCustomNavgationAnimator : NSObject <GTContainerViewControllerDelegate, GTViewControllerAnimatedTransitioning>
 
 @property (nonatomic, assign) UINavigationControllerOperation operation;
+@property (nonatomic, strong) GTPercentDrivenInteractiveTransition *interactiveTransition;
+@property (nonatomic, weak) GTCustomNavgationViewController *navgationVc;
+@property (nonatomic, assign) CGPoint firstLocation;
 
 @end
 
 @implementation GTCustomNavgationAnimator
 
+- (instancetype)initWithNavgation:(GTCustomNavgationViewController *)navgationVc {
+    self = [super init];
+    if (self) {
+        _navgationVc = navgationVc;
+        
+        UIPanGestureRecognizer *panGest = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGest:)];
+        [navgationVc.view addGestureRecognizer:panGest];
+    }
+    
+    return self;
+}
+
+#pragma mark - gest
+- (void)panGest:(UIPanGestureRecognizer *)gest {
+    switch (gest.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            self.interactiveTransition = [GTPercentDrivenInteractiveTransition new];
+            self.firstLocation = [gest locationInView:self.navgationVc.view];
+            [self.navgationVc popViewController];
+            break;
+        }
+        
+        case UIGestureRecognizerStateChanged:
+        {
+            if (self.firstLocation.x > self.navgationVc.view.frame.size.width * 0.3) {
+                return;
+            }
+            
+            CGPoint location = [gest locationInView:self.navgationVc.view];
+            CGFloat distance = MAX(location.x - self.firstLocation.x, 0);
+            [self.interactiveTransition updateInteractiveTransition:distance / self.navgationVc.view.frame.size.width];
+            
+            break;
+        }
+
+         
+        case UIGestureRecognizerStateEnded:
+        {
+            CGPoint location = [gest locationInView:self.navgationVc.view];
+            if (location.x > self.navgationVc.view.frame.size.width * 0.5) {
+                [self.interactiveTransition finishInteractiveTransition];
+            }
+            else {
+                [self.interactiveTransition cancelInteractiveTransition];
+            }
+            self.interactiveTransition = nil;
+            break;
+        }
+            
+        case UIGestureRecognizerStateFailed:
+        case UIGestureRecognizerStateCancelled:
+            self.interactiveTransition = nil;
+            [self.interactiveTransition cancelInteractiveTransition];
+        break;
+            
+        default:
+        break;
+    }
+}
+
 #pragma mark - GTContainerViewControllerDelegate
-- (nullable id <UIViewControllerInteractiveTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
+- (nullable id <GTViewControllerInteractiveTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
                                       interactionControllerForAnimationController:(id <GTViewControllerContextTransitioning>)animationController {
-    return nil;
+    if (self.operation == UINavigationControllerOperationNone || self.operation == UINavigationControllerOperationPush) {
+        return nil;
+    }
+    else {
+        return self.interactiveTransition;
+    }
+
 }
 
 - (nullable id <GTViewControllerAnimatedTransitioning>)containerViewController:(GTContainerViewController *)containerViewController
@@ -79,9 +150,6 @@
                                 [transitioningContext completeTransition:![transitioningContext transitionWasCancelled]];
                             }];
     }
-
-    
-    [transitionContext startAnimations];
 }
 
 @end
@@ -98,7 +166,7 @@
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
     self = [super initWithViewControllers:@[rootViewController]];
     if (self) {
-        GTCustomNavgationAnimator *animator = [GTCustomNavgationAnimator new];
+        GTCustomNavgationAnimator *animator = [[GTCustomNavgationAnimator alloc] initWithNavgation:self];
         self.animator = animator;
         self.delegate = animator;
     }

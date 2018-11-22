@@ -37,6 +37,7 @@
         GTCustomNavgationViewController *vc = [[GTCustomNavgationViewController alloc] initWithRootViewController:controller];
         controller.nav = vc;
         [weakSelf.navigationController pushViewController:vc animated:YES];
+        weakSelf.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }];
     
     self.dataSource = @[model1, model2];

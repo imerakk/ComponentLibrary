@@ -10,6 +10,7 @@
 		F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */; };
 		F00873BB21A5332700106E50 /* GTFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873BA21A5332700106E50 /* GTFirstViewController.m */; };
 		F00873BE21A5333A00106E50 /* GTSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873BD21A5333A00106E50 /* GTSecondViewController.m */; };
+		F00873C121A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F00873C021A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m */; };
 		F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */; };
 		F031CB98217D6FA8008DD80F /* GTUIKitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB97217D6FA8008DD80F /* GTUIKitTableViewController.m */; };
 		F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CB9A217D7299008DD80F /* GTCellModel.m */; };
@@ -56,6 +57,8 @@
 		F00873BA21A5332700106E50 /* GTFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTFirstViewController.m; sourceTree = "<group>"; };
 		F00873BC21A5333A00106E50 /* GTSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTSecondViewController.h; sourceTree = "<group>"; };
 		F00873BD21A5333A00106E50 /* GTSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTSecondViewController.m; sourceTree = "<group>"; };
+		F00873BF21A64BB300106E50 /* GTPercentDrivenInteractiveTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTPercentDrivenInteractiveTransition.h; sourceTree = "<group>"; };
+		F00873C021A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTPercentDrivenInteractiveTransition.m; sourceTree = "<group>"; };
 		F031CB93217D6B93008DD80F /* GTHomeTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTHomeTableViewController.h; sourceTree = "<group>"; };
 		F031CB94217D6B93008DD80F /* GTHomeTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTHomeTableViewController.m; sourceTree = "<group>"; };
 		F031CB96217D6FA8008DD80F /* GTUIKitTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTUIKitTableViewController.h; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				F00873B121A3E3C100106E50 /* GTCustomNavgationViewController.h */,
 				F00873B221A3E3C100106E50 /* GTCustomNavgationViewController.m */,
 				F00873B821A5011000106E50 /* GTTransitionViewControllerProtocol.h */,
+				F00873BF21A64BB300106E50 /* GTPercentDrivenInteractiveTransition.h */,
+				F00873C021A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -456,6 +461,7 @@
 				F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */,
 				F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */,
 				F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */,
+				F00873C121A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m in Sources */,
 				F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */,
 				F00873BB21A5332700106E50 /* GTFirstViewController.m in Sources */,
 				F09389822175F9E500C902D8 /* GTCarouselPageControlView.m in Sources */,
