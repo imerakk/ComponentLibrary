@@ -17,8 +17,8 @@ typedef GTExtendView *(^GTExtendViewChainableFloat)(CGFloat f);
 typedef GTExtendView *(^GTExtendViewChainableSize)(CGSize size);
 #define GTExtendViewChainableSize(size) ^GTExtendView * (CGSize size)
 
-typedef GTExtendView *(^GTExtendViewChainableColor)(UIColor *color);
-#define GTExtendViewChainableColor(color) ^GTExtendView * (UIColor *color)
+typedef GTExtendView *(^GTExtendViewChainableColor)(CGColorRef color);
+#define GTExtendViewChainableColor(color) ^GTExtendView * (CGColorRef color)
 
 typedef GTExtendView *(^GTExtendViewChainablePoint)(CGPoint point);
 #define GTExtendViewChainablePoint(point) ^GTExtendView * (CGPoint point)

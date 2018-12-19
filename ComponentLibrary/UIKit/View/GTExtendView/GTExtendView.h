@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GTGradientView : UIView
 
-@property (nonatomic, copy) NSArray *colors;
+@property (nonatomic, copy) NSArray *colors; //An array of CGColorRef objects
 @property (nonatomic, copy) NSArray<NSNumber *> *locations;
 @property (nonatomic, assign) CGPoint startPoint;
 @property (nonatomic, assign) CGPoint endPoint;
@@ -33,10 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (GTExtendViewChainableFloat)shadowOpacity;
 - (GTExtendViewChainableSize)shadowOffset;
 - (GTExtendViewChainableColor)shadowColor;
-- (GTExtendViewChainablePath)shadowPath;
+- (GTExtendViewChainablePath)shadowPath; 
 
 /** 渐变 */
-- (GTExtendViewChainableArray)gradientColors;
+- (GTExtendViewChainableArray)gradientColors; //An array of CGColorRef objects
 - (GTExtendViewChainablePoint)startPoint;
 - (GTExtendViewChainablePoint)endPoint;
 - (GTExtendViewChainableArray)gradientLocations;

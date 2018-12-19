@@ -89,7 +89,7 @@
 
 - (GTExtendViewChainableColor)shadowColor {
     return GTExtendViewChainableColor(color) {
-        self.layer.shadowColor = color.CGColor;
+        self.layer.shadowColor = color;
         return self;
     };
 }
