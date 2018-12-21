@@ -255,14 +255,14 @@
 
 - (void)finishInteractiveTransition {
     for (UIViewPropertyAnimator *animator in _animators) {
-        [animator continueAnimationWithTimingParameters:nil durationFactor:1 - animator.fractionComplete];
+        [animator continueAnimationWithTimingParameters:nil durationFactor:0];
     }
 }
 
 - (void)cancelInteractiveTransition {
     for (UIViewPropertyAnimator *animator in _animators) {
         animator.reversed = YES;
-        [animator continueAnimationWithTimingParameters:nil durationFactor:1 - animator.fractionComplete];
+        [animator continueAnimationWithTimingParameters:nil durationFactor:0];
     }
     
     _transitionWasCancelled = YES;
