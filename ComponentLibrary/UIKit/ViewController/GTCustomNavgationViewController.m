@@ -72,8 +72,8 @@
             
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
-            self.interactiveTransition = nil;
             [self.interactiveTransition cancelInteractiveTransition];
+            self.interactiveTransition = nil;
         break;
             
         default:
