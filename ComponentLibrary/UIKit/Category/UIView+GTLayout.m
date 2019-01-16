@@ -91,9 +91,8 @@
     self.height = size.height;
 }
 
-- (void)setCenter:(CGPoint)center {
-    self.centerX = center.x;
-    self.centerY = center.y;
+- (CGSize)size {
+    return self.size;
 }
 
 @end
