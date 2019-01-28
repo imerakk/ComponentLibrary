@@ -26,8 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
                                repeats:(BOOL)repeats;
 
 + (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval
-                                 block:(Block)block
-                               repeats:(BOOL)repeats;
+                               repeats:(BOOL)repeats
+                                 block:(Block)block;
 - (void)fire;
 - (void)invalidate;
 

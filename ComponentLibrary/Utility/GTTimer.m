@@ -26,8 +26,8 @@
     return [[GTTimer alloc] initWithTimerInterval:timerInterval target:target selector:selector block:nil delay:timerInterval repeats:repeats];
 }
 
-+ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval block:(Block)block repeats:(BOOL)repeats {
-    return [[GTTimer alloc] initWithTimerInterval:timerInterval target:nil selector:NULL block:block delay:timerInterval repeats:YES];
++ (instancetype)timerWithTimerInterval:(NSTimeInterval)timerInterval repeats:(BOOL)repeats block:(Block)block {
+    return [[GTTimer alloc] initWithTimerInterval:timerInterval target:nil selector:NULL block:block delay:timerInterval repeats:repeats];
 }
 
 - (instancetype)initWithTimerInterval:(NSTimeInterval)timerInterval target:(id)target selector:(SEL)selector block:(Block)block delay:(NSTimeInterval)delay repeats:(BOOL)repeats {
