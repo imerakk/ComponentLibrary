@@ -29,6 +29,7 @@
 		F09389812175F9E500C902D8 /* GTCarouselCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897A2175F9E400C902D8 /* GTCarouselCollectionViewFlowLayout.m */; };
 		F09389822175F9E500C902D8 /* GTCarouselPageControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897C2175F9E500C902D8 /* GTCarouselPageControlView.m */; };
 		F09389832175F9E500C902D8 /* GTCarouselCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F093897F2175F9E500C902D8 /* GTCarouselCollectionViewCell.m */; };
+		F097044A2201B6B900F11048 /* NSObject+GTSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = F09704492201B6B900F11048 /* NSObject+GTSwizzling.m */; };
 		F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,8 @@
 		F093897D2175F9E500C902D8 /* GTCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTCarouselView.h; sourceTree = "<group>"; };
 		F093897E2175F9E500C902D8 /* GTCarouselPageControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTCarouselPageControlView.h; sourceTree = "<group>"; };
 		F093897F2175F9E500C902D8 /* GTCarouselCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTCarouselCollectionViewCell.m; sourceTree = "<group>"; };
+		F09704482201B6B900F11048 /* NSObject+GTSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+GTSwizzling.h"; sourceTree = "<group>"; };
+		F09704492201B6B900F11048 /* NSObject+GTSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+GTSwizzling.m"; sourceTree = "<group>"; };
 		F0E8B781219AB35D000FCB20 /* GTContainerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTContainerViewController.h; sourceTree = "<group>"; };
 		F0E8B782219AB35D000FCB20 /* GTContainerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,10 +292,20 @@
 		F09389772175F97A00C902D8 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				F09704472201B4E600F11048 /* category */,
 				F031CBAF217DD387008DD80F /* GTTimer.h */,
 				F031CBB0217DD387008DD80F /* GTTimer.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		F09704472201B4E600F11048 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				F09704482201B6B900F11048 /* NSObject+GTSwizzling.h */,
+				F09704492201B6B900F11048 /* NSObject+GTSwizzling.m */,
+			);
+			path = category;
 			sourceTree = "<group>";
 		};
 		F0E8B777219598D3000FCB20 /* Category */ = {
@@ -458,6 +471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F00873BE21A5333A00106E50 /* GTSecondViewController.m in Sources */,
+				F097044A2201B6B900F11048 /* NSObject+GTSwizzling.m in Sources */,
 				F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */,
 				F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */,
 				F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */,

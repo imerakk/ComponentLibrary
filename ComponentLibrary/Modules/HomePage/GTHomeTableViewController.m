@@ -9,6 +9,7 @@
 #import "GTHomeTableViewController.h"
 #import "GTUIKitTableViewController.h"
 #import "GTCellModel.h"
+#import "NSObject+GTSwizzling.h"
 
 @interface GTHomeTableViewController ()
 
