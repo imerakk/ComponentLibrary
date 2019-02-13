@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTSnapshotCapture : NSObject
 
 + (UIImage *)imageWithScreenSnapshot;
-
++ (UIImage *)imageWithViewSnapshot:(UIView *)view;
++ (UIImage *)imageWithViewSnapshot:(UIView *)view inViewRect:(CGRect)viewRect;
 
 @end
 
