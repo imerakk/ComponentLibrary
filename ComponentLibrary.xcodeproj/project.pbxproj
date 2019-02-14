@@ -18,6 +18,7 @@
 		F031CBA5217D7D9A008DD80F /* UIView+GTLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CBA4217D7D9A008DD80F /* UIView+GTLayout.m */; };
 		F031CBB1217DD387008DD80F /* GTTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CBB0217DD387008DD80F /* GTTimer.m */; };
 		F051CC462212CB5200841BFE /* GTSnapshotCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = F051CC452212CB5200841BFE /* GTSnapshotCapture.m */; };
+		F051CC922215035900841BFE /* UIImage+GTPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = F051CC912215035900841BFE /* UIImage+GTPDF.m */; };
 		F076FE0E218C2C4500B3C2EA /* GTExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F076FE0D218C2C4500B3C2EA /* GTExtendView.m */; };
 		F09389452175F8EB00C902D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F09389442175F8EB00C902D8 /* AppDelegate.m */; };
 		F093894B2175F8EB00C902D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F09389492175F8EB00C902D8 /* Main.storyboard */; };
@@ -77,6 +78,8 @@
 		F031CBB0217DD387008DD80F /* GTTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTimer.m; sourceTree = "<group>"; };
 		F051CC442212CB5200841BFE /* GTSnapshotCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTSnapshotCapture.h; sourceTree = "<group>"; };
 		F051CC452212CB5200841BFE /* GTSnapshotCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTSnapshotCapture.m; sourceTree = "<group>"; };
+		F051CC902215035900841BFE /* UIImage+GTPDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+GTPDF.h"; sourceTree = "<group>"; };
+		F051CC912215035900841BFE /* UIImage+GTPDF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GTPDF.m"; sourceTree = "<group>"; };
 		F076FE0C218C2C4500B3C2EA /* GTExtendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendView.h; sourceTree = "<group>"; };
 		F076FE0D218C2C4500B3C2EA /* GTExtendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTExtendView.m; sourceTree = "<group>"; };
 		F076FE1521905DC200B3C2EA /* GTExtendViewChainableBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendViewChainableBlocks.h; sourceTree = "<group>"; };
@@ -211,6 +214,15 @@
 			path = ViewCategory;
 			sourceTree = "<group>";
 		};
+		F051CC8F221502DD00841BFE /* ImageCategory */ = {
+			isa = PBXGroup;
+			children = (
+				F051CC902215035900841BFE /* UIImage+GTPDF.h */,
+				F051CC912215035900841BFE /* UIImage+GTPDF.m */,
+			);
+			path = ImageCategory;
+			sourceTree = "<group>";
+		};
 		F076FE1421905D8500B3C2EA /* GTExtendView */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +315,7 @@
 		F09389772175F97A00C902D8 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				F051CC8F221502DD00841BFE /* ImageCategory */,
 				F051CC392212C9A500841BFE /* ViewCategory */,
 				F09704472201B4E600F11048 /* ObjectCategory */,
 				F031CBAF217DD387008DD80F /* GTTimer.h */,
@@ -493,6 +506,7 @@
 				F09389532175F8EC00C902D8 /* main.m in Sources */,
 				F031CBB1217DD387008DD80F /* GTTimer.m in Sources */,
 				F09389452175F8EB00C902D8 /* AppDelegate.m in Sources */,
+				F051CC922215035900841BFE /* UIImage+GTPDF.m in Sources */,
 				F09389812175F9E500C902D8 /* GTCarouselCollectionViewFlowLayout.m in Sources */,
 				F031CB98217D6FA8008DD80F /* GTUIKitTableViewController.m in Sources */,
 			);
