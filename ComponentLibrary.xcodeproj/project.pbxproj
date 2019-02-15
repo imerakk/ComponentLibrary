@@ -19,6 +19,7 @@
 		F031CBB1217DD387008DD80F /* GTTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F031CBB0217DD387008DD80F /* GTTimer.m */; };
 		F051CC462212CB5200841BFE /* GTSnapshotCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = F051CC452212CB5200841BFE /* GTSnapshotCapture.m */; };
 		F051CC922215035900841BFE /* UIImage+GTPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = F051CC912215035900841BFE /* UIImage+GTPDF.m */; };
+		F051CC9D2216A29D00841BFE /* GTFileUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F051CC9C2216A29D00841BFE /* GTFileUtility.m */; };
 		F076FE0E218C2C4500B3C2EA /* GTExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F076FE0D218C2C4500B3C2EA /* GTExtendView.m */; };
 		F09389452175F8EB00C902D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F09389442175F8EB00C902D8 /* AppDelegate.m */; };
 		F093894B2175F8EB00C902D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F09389492175F8EB00C902D8 /* Main.storyboard */; };
@@ -80,6 +81,8 @@
 		F051CC452212CB5200841BFE /* GTSnapshotCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTSnapshotCapture.m; sourceTree = "<group>"; };
 		F051CC902215035900841BFE /* UIImage+GTPDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+GTPDF.h"; sourceTree = "<group>"; };
 		F051CC912215035900841BFE /* UIImage+GTPDF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GTPDF.m"; sourceTree = "<group>"; };
+		F051CC9B2216A29D00841BFE /* GTFileUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTFileUtility.h; sourceTree = "<group>"; };
+		F051CC9C2216A29D00841BFE /* GTFileUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTFileUtility.m; sourceTree = "<group>"; };
 		F076FE0C218C2C4500B3C2EA /* GTExtendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendView.h; sourceTree = "<group>"; };
 		F076FE0D218C2C4500B3C2EA /* GTExtendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTExtendView.m; sourceTree = "<group>"; };
 		F076FE1521905DC200B3C2EA /* GTExtendViewChainableBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTExtendViewChainableBlocks.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				F031CBB0217DD387008DD80F /* GTTimer.m */,
 				F051CC442212CB5200841BFE /* GTSnapshotCapture.h */,
 				F051CC452212CB5200841BFE /* GTSnapshotCapture.m */,
+				F051CC9B2216A29D00841BFE /* GTFileUtility.h */,
+				F051CC9C2216A29D00841BFE /* GTFileUtility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				F031CB9B217D7299008DD80F /* GTCellModel.m in Sources */,
 				F00873B321A3E3C100106E50 /* GTCustomNavgationViewController.m in Sources */,
 				F0E8B783219AB35D000FCB20 /* GTContainerViewController.m in Sources */,
+				F051CC9D2216A29D00841BFE /* GTFileUtility.m in Sources */,
 				F00873C121A64BB300106E50 /* GTPercentDrivenInteractiveTransition.m in Sources */,
 				F031CB95217D6B93008DD80F /* GTHomeTableViewController.m in Sources */,
 				F00873BB21A5332700106E50 /* GTFirstViewController.m in Sources */,

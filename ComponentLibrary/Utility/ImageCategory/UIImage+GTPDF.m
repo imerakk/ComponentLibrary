@@ -7,11 +7,14 @@
 //
 
 #import "UIImage+GTPDF.h"
+#import "GTFileUtility.h"
 
 #define COMPLETION(image) \
 dispatch_async(dispatch_get_main_queue(), ^{ \
 completion(image); \
 });
+
+static NSString * const kFileDirectoryName = @"GTPDF";
 
 static dispatch_queue_t image_pdf_category_create_queue() {
     static dispatch_queue_t queue;
@@ -97,7 +100,52 @@ static UIImage * GTImageWithPDFDocument(CGPDFDocumentRef document, NSUInteger pa
     });
 }
 
-+ (void)saveToPDFWithFileName:(NSString *)fileName completion:(void (^)(BOOL, NSString * _Nonnull))completion {
+- (void)saveToPDFWithFileName:(NSString *)fileName atSize:(CGSize)size completion:(void (^)(BOOL, NSString * _Nullable))completion {
+    if (![fileName hasSuffix:@"pdf"]) {
+        fileName = [fileName stringByAppendingString:@".pdf"];
+    }
     
+    NSString *docDir = [[GTFileUtility documentDirectory] stringByAppendingPathComponent:kFileDirectoryName];
+    NSString *filePath = [docDir stringByAppendingPathComponent:fileName];
+    
+    dispatch_async(image_pdf_category_create_queue(), ^{
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:docDir]) {
+            NSError *error = nil;
+            [fileManager createDirectoryAtPath:docDir withIntermediateDirectories:YES attributes:nil error:&error];
+            if (error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(NO, nil);
+                    return ;
+                });
+            }
+        }
+        
+        BOOL success = UIGraphicsBeginPDFContextToFile(filePath, CGRectMake(0, 0, size.width, size.height), nil);
+        if (!success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(NO, nil);
+                return ;
+            });
+        }
+        
+        UIGraphicsBeginPDFPage();
+        CGContextRef conetxt = UIGraphicsGetCurrentContext();
+        CGFloat scale = MIN(size.width / self.size.width, size.height / self.size.height);
+        CGFloat translationX = (size.width - self.size.width*scale)*0.5;
+        CGFloat translationY = (size.height - self.size.height*scale)*0.5;
+        
+        CGAffineTransform transform = CGAffineTransformScale(CGContextGetCTM(conetxt), scale, -scale);
+        transform = CGAffineTransformTranslate(transform, 0, -size.height/scale);
+        transform = CGAffineTransformTranslate(transform, translationX/scale, translationY/scale);
+        CGContextConcatCTM(conetxt, transform);
+        
+        [self drawAtPoint:CGPointZero];
+        UIGraphicsEndPDFContext();
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(YES, filePath);
+        });
+    });
 }
 @end
