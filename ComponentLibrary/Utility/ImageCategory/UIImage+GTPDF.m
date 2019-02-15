@@ -8,17 +8,49 @@
 
 #import "UIImage+GTPDF.h"
 
-@implementation UIImage (GTPDF)
-
-+ (void)PDFToImageWithUrl:(NSURL *)url
-            pageSizeBlock:(CGSize (^)(CGSize))pageSizeBlock
-               completion:(void (^)(UIImage *))completion {
-    dispatch_queue_t queue = dispatch_queue_create("UIImage.PDF.Processing", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(queue, ^{
 #define COMPLETION(image) \
 dispatch_async(dispatch_get_main_queue(), ^{ \
 completion(image); \
 });
+
+static dispatch_queue_t image_pdf_category_create_queue() {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("UIImage.Category.PDF.Processing", DISPATCH_QUEUE_CONCURRENT);
+    });
+    
+    return queue;
+}
+
+static UIImage * GTImageWithPDFDocument(CGPDFDocumentRef document, NSUInteger page, CGSize size) {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat pixelsWidth = size.width*scale;
+    CGFloat pixelsHeight = size.height*scale;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef context = CGBitmapContextCreate(NULL, pixelsWidth, pixelsHeight, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+    CGContextScaleCTM(context, scale, scale);
+    CGPDFPageRef documentPage = CGPDFDocumentGetPage(document, page);
+    CGAffineTransform transform = CGPDFPageGetDrawingTransform(documentPage, kCGPDFMediaBox, CGRectMake(0, 0, size.width, size.height), 0, YES);
+    CGContextConcatCTM(context, transform);
+    CGContextDrawPDFPage(context, documentPage);
+    
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+    UIGraphicsEndImageContext();
+    
+    CGImageRelease(imageRef);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    return image;
+}
+
+@implementation UIImage (GTPDF)
+
++ (void)PDFToImagesWithUrl:(NSURL *)url atSize:(CGSize)size completion:(void (^)(NSArray <UIImage *>* _Nullable))completion {
+    dispatch_async(image_pdf_category_create_queue(), ^{
         CGPDFDocumentRef documentRef = CGPDFDocumentCreateWithURL((__bridge CFURLRef)url);
         if (documentRef == NULL) {
             CGPDFDocumentRelease(documentRef);
@@ -33,57 +65,39 @@ completion(image); \
             return;
         };
         
-        __block CGSize pageSize = CGSizeZero;
-        CGPDFPageRef page = CGPDFDocumentGetPage(documentRef, 0);
-        CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-        
-        if (pageSizeBlock) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                pageSize = pageSizeBlock(pageRect.size);
-            });
-        }
-        else {
-            pageSize = pageRect.size;
-        }
-        
-        CGFloat scale = [UIScreen mainScreen].scale;
         NSMutableArray *images = [NSMutableArray array];
         for (int i=1; i<=pageNumber; i++) {
-            CGPDFPageRef page = CGPDFDocumentGetPage(documentRef, i);
-            CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-            CGFloat pixelsWidth = pageRect.size.width*scale;
-            CGFloat pixelsHeight = pageRect.size.height*scale;
-            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-            CGContextRef context = CGBitmapContextCreate(NULL, pixelsWidth, pixelsHeight, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
-            CGContextScaleCTM(context, scale, scale);
-            CGContextDrawPDFPage(context, page);
-            CGImageRef imageRef = CGBitmapContextCreateImage(context);
-            UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+            UIImage *image = GTImageWithPDFDocument(documentRef, i, size);
             [images addObject:image];
-            UIGraphicsEndImageContext();
-            
-            CGImageRelease(imageRef);
-            CGContextRelease(context);
-            CGColorSpaceRelease(colorSpace);
         }
         CGPDFDocumentRelease(documentRef);
         
-        CGSize imageSize = CGSizeMake(pageSize.width, pageSize.height * pageNumber);
-        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
-        [images enumerateObjectsUsingBlock:^(UIImage * _Nonnull image, NSUInteger idx, BOOL * _Nonnull stop) {
-            CGRect rect = CGRectMake(0, pageSize.height*idx, pageSize.width, pageSize.height);
-            [image drawInRect:rect];
-        }];
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        COMPLETION(image);
-        UIGraphicsEndImageContext();
-#undef COMPLETION
+        COMPLETION(images);
+    });
+}
+
++ (void)PDFToImageWithUrl:(NSURL *)url atSize:(CGSize)size atPage:(NSUInteger)page completion:(void (^)(UIImage * _Nullable))completion {
+    dispatch_async(image_pdf_category_create_queue(), ^{
+
+        CGPDFDocumentRef documentRef = CGPDFDocumentCreateWithURL((__bridge CFURLRef)url);
+        if (documentRef == NULL) {
+            CGPDFDocumentRelease(documentRef);
+            COMPLETION(nil);
+            return;
+        };
+        
+        size_t pageNumber = CGPDFDocumentGetNumberOfPages(documentRef);
+        if (pageNumber == 0) {
+            CGPDFDocumentRelease(documentRef);
+            COMPLETION(nil);
+            return;
+        };
+        
+        COMPLETION(GTImageWithPDFDocument(documentRef, page, size));
     });
 }
 
 + (void)saveToPDFWithFileName:(NSString *)fileName completion:(void (^)(BOOL, NSString * _Nonnull))completion {
     
 }
-
-
 @end

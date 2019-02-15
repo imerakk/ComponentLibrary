@@ -12,9 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (GTPDF)
 
++ (void)PDFToImagesWithUrl:(NSURL *)url
+                    atSize:(CGSize)size
+                completion:(void (^)(NSArray <UIImage *>* _Nullable))completion;
+
 + (void)PDFToImageWithUrl:(NSURL *)url
-            pageSizeBlock:(CGSize (^)(CGSize originPageSize))pageSizeBlock
-               completion:(void (^)(UIImage *))completion;
+                   atSize:(CGSize)size
+                   atPage:(NSUInteger)page
+               completion:(void (^)(UIImage * _Nullable))completion;
 
 + (void)saveToPDFWithFileName:(NSString *)fileName completion:(void (^)(BOOL success, NSString *filePath))completion;
 
