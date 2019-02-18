@@ -22,4 +22,17 @@
     return NSTemporaryDirectory();
 }
 
++ (void)createDirectoryAtPath:(NSString *)path error:(NSError * _Nullable __autoreleasing *)error {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory;
+    if (![fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
+        [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:error];
+    }
+    else {
+        if (!isDirectory) {
+            *error = [NSError errorWithDomain:@"GTCreateDirectory" code:1 userInfo:nil];
+        }
+    }
+}
+
 @end

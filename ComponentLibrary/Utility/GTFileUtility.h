@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)documentDirectory;
 + (NSString *)libraryDirectory;
 + (NSString *)tempDirectory;
++ (void)createDirectoryAtPath:(NSString *)path error:(NSError **)error;
 
 @end
 

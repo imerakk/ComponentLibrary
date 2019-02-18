@@ -21,8 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
                    atPage:(NSUInteger)page
                completion:(void (^)(UIImage * _Nullable))completion;
 
++ (void)imagesToPDFWithFileName:(NSString *)fileName
+                         images:(NSArray <UIImage *>*)images
+                         atSize:(CGSize)size
+                     completion:(void (^)(BOOL success, NSString * _Nullable filePath))completion;
 
-- (void)saveToPDFWithFileName:(NSString *)fileName atSize:(CGSize)size completion:(void (^)(BOOL success, NSString * _Nullable filePath))completion;
+- (void)saveToPDFWithFileName:(NSString *)fileName
+                       atSize:(CGSize)size
+                   completion:(void (^)(BOOL success, NSString * _Nullable filePath))completion;
 
 
 @end
